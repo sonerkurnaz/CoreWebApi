@@ -1,5 +1,6 @@
 ﻿using HttpStatusCode.Infrastructure.Context;
 using HttpStatusCode.Infrastructure.Repository.Abstract;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace HttpStatusCode.Infrastructure.Repository.Concrete
@@ -13,27 +14,38 @@ namespace HttpStatusCode.Infrastructure.Repository.Concrete
         }
         public int Add(T input)
         {
-            throw new NotImplementedException();
+            context.Set<T>().Add(input);
+            return context.SaveChanges();
         }
 
         public int Delete(T input)
         {
-            throw new NotImplementedException();
+            context.Set<T>().Remove(input);
+            return context.SaveChanges();
         }
 
-        public T Find(int id)
+        public T Find(int Id)
         {
-            throw new NotImplementedException();
+            context.Set<T>().Find();
+            return context.Set<T>().Find(Id);
         }
 
         public ICollection<T> FindAll(Expression<Func<T, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            if (filter != null)
+            {
+                return context.Set<T>().Where(filter).ToList();
+            }
+            else
+            {
+                return context.Set<T>().ToList();
+            }
         }
 
         public IQueryable<T> FindAllInclude(Expression<Func<T, bool>> filter = null, params Expression<Func<T, object>>[] include)
         {
-            throw new NotImplementedException();
+            var query = context.Set<T>().Where(filter);
+            return include.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
 
         public int Update(T input)

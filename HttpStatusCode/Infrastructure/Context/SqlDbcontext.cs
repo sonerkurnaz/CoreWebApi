@@ -19,5 +19,9 @@ namespace HttpStatusCode.Infrastructure.Context
         {
             modelBuilder.ApplyConfiguration(new CategorySeedData());
         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"server=.;Database=WebApiDb;User Id=sa;Password=123");
+        }
     }
 }
