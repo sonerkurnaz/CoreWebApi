@@ -39,13 +39,14 @@
                         <select asp-for="Adres.SehirId" id="sehirlerCombo">
                             <option>Seciniz</option>
                         </select>
+                        </div>
                         <div class="form-group">
-                        <label asp-for="Adres.IlceId" class="control-label">Ilce</label>
-                        <select asp-for="Adres.IlceId" id="ilceCombo">
-                            <option>Seciniz</option>
-                        </select>
-                        
-                    </div>
+                            <label asp-for="Adres.IlceId" class="control-label">Ilce</label>
+                            <select asp-for="Adres.IlceId" id="ilceCombo">
+                                <option>Seciniz</option>
+                            </select>
+
+                        </div>
                 </form>
             </div>
         </div>
@@ -53,19 +54,18 @@
 </div>
 
 @section Scripts
-{
+    {
     <script type="text/javascript">
-$(document).ready(function() {
-    var url = "http://localhost:5071/api/Sehir"
-    $.ajax({
-        url:url,
-        type:'GET',
-        dataType:'json',
-        success: function(result)
-        {
-            console.log(result)
-        }
-    })
-});
+        $(document).ready(function() {
+            var url = "http://localhost:5071/api/Sehir"
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                success: function(result) {
+                    console.log(result)
+                }
+            })
+        });
     </script>
 }
