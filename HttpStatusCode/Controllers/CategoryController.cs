@@ -44,7 +44,7 @@ namespace HttpStatusCode.Controllers
 
             if (sonuc == true)
             {
-                ModelState.AddModelError("", $"")
+                ModelState.AddModelError("", $"");
                 return StatusCode(406);
             }
             categoryDAL.Add(input);
