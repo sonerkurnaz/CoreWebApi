@@ -1,9 +1,8 @@
-﻿using HttpStatusCode.Models.Entities.Abstract;
-
-namespace HttpStatusCode.Models.Entities.Concrete
+﻿namespace HttpStatusCode.Models.Entities.Concrete
 {
-    public class Sehir : BaseEntity
+    public class Sehir
     {
+        public int Id { get; set; }
         public string SehirAdi { get; set; }
         public ICollection<Ilce> Ilce { get; set; }
 

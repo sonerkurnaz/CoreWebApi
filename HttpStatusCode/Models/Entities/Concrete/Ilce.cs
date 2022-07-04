@@ -1,11 +1,10 @@
-﻿using HttpStatusCode.Models.Entities.Abstract;
-
-namespace HttpStatusCode.Models.Entities.Concrete
+﻿namespace HttpStatusCode.Models.Entities.Concrete
 {
-    public class Ilce : BaseEntity
+    public class Ilce
     {
+        public int Id { get; set; }
         public string IlceAdi { get; set; }
-        public string SehirId { get; set; }
+        public int SehirId { get; set; }
         public Sehir Sehir { get; set; }
 
     }

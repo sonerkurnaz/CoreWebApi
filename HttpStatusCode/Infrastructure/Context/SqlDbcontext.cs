@@ -15,13 +15,17 @@ namespace HttpStatusCode.Infrastructure.Context
 
         }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Sehir> Sehirler { get; set; }
+        public DbSet<Ilce> Ilceler { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CategorySeedData());
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"server=.;Database=WebApiDb;User Id=sa;Password=123");
+            optionsBuilder.UseSqlServer
+                (@"server=.;Database=WebApiDb;User Id=sa;Password=123");
         }
     }
 }
