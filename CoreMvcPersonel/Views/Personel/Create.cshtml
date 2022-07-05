@@ -1,71 +1,107 @@
 ﻿@using CoreMvcPersonel.Models.DTOs.PersonelDTOs
 @model PersonelCreateDTO
+
 <div class="row">
     <div class="card">
         <div class="card-header">
-            <h3>Personel Kayıt</h3>
+            <h3>Personel Kayit</h3>
         </div>
         <div class="card-body">
             <div class="col-sm-6">
                 <form asp-action="Create" enctype="multipart/form-data">
-                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="tex-danger" asp-validation-summary="ModelOnly"></div>
                     <div class="form-group">
                         <label asp-for="Ad" class="control-label"></label>
-                        <input asp-for="Ad" class="form-control" />
+                        <input asp-for="Ad" class="form-control"/>
                         <span asp-validation-for="Ad"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Soyad" class="control-label"></label>
-                        <input asp-for="Soyad" class="form-control" />
+                        <input asp-for="Soyad" class="form-control"/>
                         <span asp-validation-for="Soyad"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" />
+                        <input asp-for="Email" class="form-control"/>
                         <span asp-validation-for="Email"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Gsm" class="control-label"></label>
-                        <input asp-for="Gsm" class="form-control" />
+                        <input asp-for="Gsm" class="form-control"/>
                         <span asp-validation-for="Gsm"></span>
                     </div>
-                    <div class="form-group">
+                     <div class="form-group">
                         <label asp-for="TcNo" class="control-label"></label>
-                        <input asp-for="TcNo" class="form-control" />
+                        <input asp-for="TcNo" class="form-control"/>
                         <span asp-validation-for="TcNo"></span>
                     </div>
-                    <div class="form-group">
+                     <div class="form-group">
                         <label asp-for="Adres.SehirId" class="control-label">Sehir</label>
                         <select asp-for="Adres.SehirId" id="sehirlerCombo">
                             <option>Seciniz</option>
                         </select>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Adres.IlceId" class="control-label">Ilce</label>
-                            <select asp-for="Adres.IlceId" id="ilceCombo">
-                                <option>Seciniz</option>
-                            </select>
-
-                        </div>
+                        
+                    </div>
+                      <div class="form-group">
+                        <label asp-for="Adres.IlceId" class="control-label">Ilce</label>
+                        <select asp-for="Adres.IlceId" id="ilcelerCombo">
+                            <option>Seciniz</option>
+                        </select>
+                        
+                    </div>
+                 <div class="form-group">
+                        <label asp-for="PhotoUrl" class="control-label"></label>
+                        <input asp-for="PhotoUrl" class="form-control" accept="image/*"/>
+                        <span asp-validation-for="PhotoUrl"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Kaydet" class="btn btn-primary"/>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
+
 @section Scripts
-    {
+{
     <script type="text/javascript">
-        $(document).ready(function() {
-            var url = "http://localhost:5071/api/Sehir"
-            $.ajax({
-                url: url,
-                type: 'GET',
-                dataType: 'json',
-                success: function(result) {
-                    console.log(result)
+    
+    $(document).ready(function() {    // Bütün Dokuman yuklendikten conra aşagidaki kodlar calissin.
+       
+        var sehirlerUrl = "http://localhost:5071/api/Sehir";
+        
+        $.ajax({
+            url: sehirlerUrl,
+            type: 'GET',
+            dataType: 'json',
+            success: function(result) {
+                for (let key in result) {
+                    $("#sehirlerCombo")
+                    .append("<option value=" + result[key].id + ">" + result[key].sehirAdi + "</option>");
                 }
-            })
+            }
+        });//Ajax
+        //SehirlerCombo degisklik oldugunda yapilacaklar
+        $("#sehirlerCombo").change(function() {
+            var sehirId = $(this).find(":selected").val();
+            var ilceUrl = "http://localhost:5071/api/Ilce?sehirId=" + sehirId;
+            $.ajax({
+            url: ilceUrl,
+            type: 'GET',
+            dataType: 'json',
+            success: function(result) {
+                console.log(result);
+                $("#ilcelerCombo").children().remove();
+                for (let key in result) {
+                    $("#ilcelerCombo")
+                    .append("<option value=" + result[key].id + ">" + result[key].ilceAdi + "</option>");
+                }
+            }
+        });//Ajax
         });
+    })
+       
     </script>
 }
