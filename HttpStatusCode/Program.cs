@@ -1,4 +1,4 @@
-using HttpStatusCode.Infrastructure.Context;
+ï»¿using HttpStatusCode.Infrastructure.Context;
 using HttpStatusCode.Infrastructure.Repository.Abstract;
 using HttpStatusCode.Infrastructure.Repository.Concrete;
 using Microsoft.EntityFrameworkCore;
@@ -25,9 +25,9 @@ builder.Services.AddScoped<IilceDAL, IlceDAL>();
 //{
 //    opt.SwaggerDoc("RestFulApiDoc", new OpenApiInfo()
 //    {
-//        Title = "Restfull API Örnek Dökümani",
+//        Title = "Restfull API Ã–rnek DÃ¶kÃ¼mani",
 //        Version = "v1",
-//        Description = "Restfull örnekleri",
+//        Description = "Restfull Ã¶rnekleri",
 //        Contact = new OpenApiContact()
 //        {
 //            Name = "Ali Yilmaz",
@@ -39,7 +39,15 @@ builder.Services.AddScoped<IilceDAL, IlceDAL>();
 //    var xmlCommentFullName = Path.Combine(AppContext.BaseDirectory, xmlCommentFile);
 //    opt.IncludeXmlComments(xmlCommentFullName);
 //});
-
+#region Cors ayarlarÄ±nÄ±n eklenmesi
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(p =>
+    p.AllowAnyHeader()
+    .AllowAnyOrigin()
+    .AllowAnyMethod());
+});
+#endregion
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,7 +56,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors();
 app.UseAuthorization();
 
 app.MapControllers();
